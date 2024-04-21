@@ -20,3 +20,28 @@ az webapp deployment source config-zip --src BestBikes.WebApp.zip --resource-gro
 ```
 
 ![az webapp deployment](documentation/images/az-webapp-deployment.PNG)
+
+## Sample 2
+
+```powershell
+docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
+
+docker image list
+
+docker run mcr.microsoft.com/dotnet/samples:aspnetapp
+
+docker run -p 8080:80 -d mcr.microsoft.com/dotnet/samples:aspnetapp
+
+docker ps
+docker ps -a
+docker container ls
+docker stop elegant_ramanujan
+
+docker start elegant_ramanujan
+
+docker rm elegant_ramanujan
+
+docker container rm -f elegant_ramanujan
+
+docker image rm mcr.microsoft.com/dotnet/core/samples:aspnetapp
+```
