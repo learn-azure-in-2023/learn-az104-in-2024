@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\HotelReservationSystem.Data\HotelReservationSystem.Data.csproj" />
   </ItemGroup>
 
 </Project>
