@@ -47,23 +47,34 @@ docker image rm mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
 
 ```powershell
-az group create --name mygroup --location westus
+docker build -t hotelreservationsystemapi -f .\HotelReservationSystem.API\Dockerfile .
 
-az acr create --name <unique name> --resource-group mygroup --sku standard --admin-enabled true
+docker image list
 
-docker login myregistry.azurecr.io
+docker ps -a
 
-az acr credential show --name myregistry --resource-group mygroup
+docker run -p 8080:8080 -d --name reservations hotelreservationsystemapi
+```
 
-docker tag reservationsystem myregistry.azurecr.io/reservationsystem:v2
+```powershell
+$rgname = 'rg-az104-dev-001'
+az group create --name $rgname --location westus
 
-docker push myregistry.azurecr.io/reservationsystem:v2
+az acr create --name <unique name> --resource-group $rgname --sku standard --admin-enabled true
 
-az acr repository list --name myregistry --resource-group mygroup
+docker login acraz104dev001.azurecr.io
 
-az acr repository show --repository reservationsystem --name myregistry --resource-group mygroup
+az acr credential show --name acraz104dev001 --resource-group $rgname
 
-az container create --resource-group mygroup --name myinstance --image myregistry.azurecr.io/myapp:latest --dns-name-label mydnsname --registry-username <username> --registry-password <password>
+docker tag hotelreservationsystemapi acraz104dev001.azurecr.io/hotelreservationsystemapi:v2
 
-az container show --resource-group mygroup --name myinstance --query ipAddress.fqdn
+docker push acraz104dev001.azurecr.io/hotelreservationsystemapi:v2
+
+az acr repository list --name acraz104dev001 --resource-group $rgname
+
+az acr repository show --repository hotelreservationsystemapi --name acraz104dev001 --resource-group $rgname
+
+az container create --resource-group $rgname --name acihotelreservationsystemapi --image acraz104dev001.azurecr.io/myapp:latest --dns-name-label acihotelreservationsystemapi --registry-username <username> --registry-password <password>
+
+az container show --resource-group $rgname --name acihotelreservationsystemapi --query ipAddress.fqdn
 ```
