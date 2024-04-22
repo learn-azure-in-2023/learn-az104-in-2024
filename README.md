@@ -45,3 +45,25 @@ docker container rm -f elegant_ramanujan
 
 docker image rm mcr.microsoft.com/dotnet/core/samples:aspnetapp
 ```
+
+```powershell
+az group create --name mygroup --location westus
+
+az acr create --name <unique name> --resource-group mygroup --sku standard --admin-enabled true
+
+docker login myregistry.azurecr.io
+
+az acr credential show --name myregistry --resource-group mygroup
+
+docker tag reservationsystem myregistry.azurecr.io/reservationsystem:v2
+
+docker push myregistry.azurecr.io/reservationsystem:v2
+
+az acr repository list --name myregistry --resource-group mygroup
+
+az acr repository show --repository reservationsystem --name myregistry --resource-group mygroup
+
+az container create --resource-group mygroup --name myinstance --image myregistry.azurecr.io/myapp:latest --dns-name-label mydnsname --registry-username <username> --registry-password <password>
+
+az container show --resource-group mygroup --name myinstance --query ipAddress.fqdn
+```
