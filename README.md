@@ -74,7 +74,7 @@ az acr repository list --name acraz104dev001 --resource-group $rgname
 
 az acr repository show --repository hotelreservationsystemapi --name acraz104dev001 --resource-group $rgname
 
-az container create --resource-group $rgname --name acihotelreservationsystemapi --image acraz104dev001.azurecr.io/myapp:latest --dns-name-label acihotelreservationsystemapi --registry-username <username> --registry-password <password>
+az container create --resource-group $rgname --name acihotelreservationsystemapi --image acraz104dev001.azurecr.io/hotelreservationsystemapi:latest --dns-name-label acihotelreservationsystemapi --registry-username <username> --registry-password <password>
 
 az container show --resource-group $rgname --name acihotelreservationsystemapi --query ipAddress.fqdn
 ```
